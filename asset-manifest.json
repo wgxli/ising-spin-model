@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/ising-spin-model/static/css/main.40c6684d.chunk.css",
+    "main.js": "/ising-spin-model/static/js/main.752b6350.chunk.js",
+    "main.js.map": "/ising-spin-model/static/js/main.752b6350.chunk.js.map",
+    "runtime-main.js": "/ising-spin-model/static/js/runtime-main.171c5bd4.js",
+    "runtime-main.js.map": "/ising-spin-model/static/js/runtime-main.171c5bd4.js.map",
+    "static/js/2.007e0983.chunk.js": "/ising-spin-model/static/js/2.007e0983.chunk.js",
+    "static/js/2.007e0983.chunk.js.map": "/ising-spin-model/static/js/2.007e0983.chunk.js.map",
+    "index.html": "/ising-spin-model/index.html",
+    "precache-manifest.72b3605e3e6bcdb700d4b7ca1db83aec.js": "/ising-spin-model/precache-manifest.72b3605e3e6bcdb700d4b7ca1db83aec.js",
+    "service-worker.js": "/ising-spin-model/service-worker.js",
+    "static/css/main.40c6684d.chunk.css.map": "/ising-spin-model/static/css/main.40c6684d.chunk.css.map",
+    "static/js/2.007e0983.chunk.js.LICENSE.txt": "/ising-spin-model/static/js/2.007e0983.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.171c5bd4.js",
+    "static/js/2.007e0983.chunk.js",
+    "static/css/main.40c6684d.chunk.css",
+    "static/js/main.752b6350.chunk.js"
+  ]
+}

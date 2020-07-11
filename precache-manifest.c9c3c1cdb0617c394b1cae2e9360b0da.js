@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fc000d63eee856e6f1747a29725b3c59",
+    "revision": "21b3ebd40a042d340c4ecef02e42af2d",
     "url": "/ising-spin-model/index.html"
   },
   {

@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ising-spin-model/static/css/main.40c6684d.chunk.css",
-    "main.js": "/ising-spin-model/static/js/main.752b6350.chunk.js",
-    "main.js.map": "/ising-spin-model/static/js/main.752b6350.chunk.js.map",
+    "main.js": "/ising-spin-model/static/js/main.44c4756c.chunk.js",
+    "main.js.map": "/ising-spin-model/static/js/main.44c4756c.chunk.js.map",
     "runtime-main.js": "/ising-spin-model/static/js/runtime-main.171c5bd4.js",
     "runtime-main.js.map": "/ising-spin-model/static/js/runtime-main.171c5bd4.js.map",
     "static/js/2.007e0983.chunk.js": "/ising-spin-model/static/js/2.007e0983.chunk.js",
     "static/js/2.007e0983.chunk.js.map": "/ising-spin-model/static/js/2.007e0983.chunk.js.map",
     "index.html": "/ising-spin-model/index.html",
-    "precache-manifest.cde0a8d4baafb80323e26c5aa3feeda2.js": "/ising-spin-model/precache-manifest.cde0a8d4baafb80323e26c5aa3feeda2.js",
+    "precache-manifest.2121486a979fecaf444d28d29d469043.js": "/ising-spin-model/precache-manifest.2121486a979fecaf444d28d29d469043.js",
     "service-worker.js": "/ising-spin-model/service-worker.js",
     "static/css/main.40c6684d.chunk.css.map": "/ising-spin-model/static/css/main.40c6684d.chunk.css.map",
     "static/js/2.007e0983.chunk.js.LICENSE.txt": "/ising-spin-model/static/js/2.007e0983.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.171c5bd4.js",
     "static/js/2.007e0983.chunk.js",
     "static/css/main.40c6684d.chunk.css",
-    "static/js/main.752b6350.chunk.js"
+    "static/js/main.44c4756c.chunk.js"
   ]
 }

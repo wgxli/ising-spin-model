@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ising-spin-model/precache-manifest.cde0a8d4baafb80323e26c5aa3feeda2.js"
+  "/ising-spin-model/precache-manifest.2121486a979fecaf444d28d29d469043.js"
 );
 
 self.addEventListener('message', (event) => {

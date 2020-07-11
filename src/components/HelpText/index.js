@@ -6,8 +6,8 @@ function HelpText() {
     const [open, setOpen] = useState(true);
 
     return <>
-        <div className={'help-container ' + (open ? 'open' : 'closed')}>
-        <div className='help-text'>
+        <div className={'help-container ' + (open ? 'open' : 'closed')} onClick={() => setOpen(false)}>
+        <div className='help-text' onClick={(e) => e.stopPropagation()}>
             <div className='header'>
                 <span className='icon'><Magnet/></span>
                 <div className='title'>

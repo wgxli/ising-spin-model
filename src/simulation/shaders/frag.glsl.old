@@ -1,0 +1,65 @@
+// This is the old shader,
+// which used the GBW channels
+// of each pixel purely for aesthetics.
+precision highp float;
+
+uniform sampler2D u_spin;
+uniform vec2 u_resolution;
+
+uniform float u_coupling;
+uniform float u_field;
+uniform float u_temperature;
+
+uniform float u_pass;
+uniform float u_iteration;
+uniform float u_random_seed;
+
+varying vec2 v_texCoord;
+
+const float C_BOLTZMANN = 4e-3;
+
+vec4 get_spin(float dx, float dy) {
+    return 2.0 * texture2D(
+        u_spin,
+        v_texCoord + vec2(dx, dy) / u_resolution
+    ) - 1.0;
+}
+
+float rand(vec2 co) {
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
+void main() {
+    vec4 spin = get_spin(0.0, 0.0);
+    vec4 new_spin = (spin + 1.0)/2.0;
+
+    vec4 adjacent_sum = get_spin(1.0, 0.0) + get_spin(-1.0, 0.0) + get_spin(0.0, 1.0) + get_spin(0.0, -1.0);
+
+    // Render to texture on pass zero, otherwise render to screen.
+    if (u_pass < 0.5) {
+        // Compute new spins on pass 0, otherwise just display existing spins.
+        float delta_h = 2.0 * spin.x * (u_coupling * adjacent_sum.x + u_field);
+        float beta = 1.0 / (u_temperature * C_BOLTZMANN);
+        float flip_probability = exp(-max(delta_h, 0.0) * beta);
+
+        // Ensures we never flip two adjacent cells at once
+        bool mask = mod(
+            gl_FragCoord.x + gl_FragCoord.y + u_iteration, 2.0
+        ) < 0.5;
+
+        if (mask && (rand(
+            v_texCoord + u_random_seed * vec2(1.0, 3.14159)
+        ) < flip_probability)) {
+            new_spin = 1.0 - new_spin;
+        }
+
+        // We store the actual bit in R,
+        // average of adjacent R in G,
+        // average of adjacent G in B,
+        // average of adjacent B in A.
+        // (This is purely for aesthetics)
+        gl_FragColor = vec4(new_spin.x, (adjacent_sum + spin).xyz / 5.0);
+    } else {
+        gl_FragColor = vec4(new_spin.zyx, 1.0);
+    }
+}

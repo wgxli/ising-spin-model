@@ -16,12 +16,14 @@ let state = {
     field: 0,
     temperature: 273,
     iteration: 0,
+    pass: 0,
     random_seed: 0,
 };
 
 // Location of GLSL uniforms.
 // Will be initialized based on state.
 let uniforms = {};
+
 
 
 // GLSL Initialization Functions
@@ -96,6 +98,7 @@ function createUniforms() {
 }
 
 
+
 // GLSL Update Functions
 function initializeTexture() {
     // Initialize empty texture
@@ -115,6 +118,9 @@ function setState(name, value) {
     state[name] = value;
     gl.uniform1f(uniforms[name], value);
 }
+
+
+
 
 
 // Main initialization function
@@ -154,6 +160,7 @@ function render() {
     gl.bindTexture(gl.TEXTURE_2D, currentState);
 
     // Render to texture
+    setState('pass', 0);
     gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
     gl.framebufferTexture2D(
         gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
@@ -162,6 +169,7 @@ function render() {
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
     // Render to screen
+    setState('pass', 1);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 

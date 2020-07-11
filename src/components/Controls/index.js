@@ -27,8 +27,8 @@ const info = {
     },
     field: {
         name: 'External Field Strength',
-        min: -2,
-        max: 2,
+        min: -0.5,
+        max: 0.5,
         decimals: 3,
         unit: 'T',
         icon: <Magnet/>

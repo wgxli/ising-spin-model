@@ -1,6 +1,12 @@
 import React from 'react';
 
-import {FaThermometerHalf as Thermometer} from 'react-icons/fa';
+import {
+    FaThermometerEmpty, 
+    FaThermometerQuarter,
+    FaThermometerHalf,
+    FaThermometerThreeQuarters,
+    FaThermometerFull
+} from 'react-icons/fa';
 import {AiOutlineSwap as Coupling} from 'react-icons/ai';
 import {IoIosMagnet as Magnet} from 'react-icons/io';
 
@@ -16,12 +22,12 @@ const info = {
         max: 800,
         decimals: 0,
         unit: 'K',
-        icon: <Thermometer/>,
+        icon: <FaThermometerHalf/>,
     },
     coupling: {
         name: 'Coupling Constant',
         min: 0.2,
-        max: 5,
+        max: 2,
         decimals: 2,
         icon: <Coupling/>,
     },
@@ -35,6 +41,17 @@ const info = {
     },
 }
 
+
+// For fun
+function updateThermometer(temp) {
+    let icon = <FaThermometerEmpty/>;
+    if (temp > 100) {icon = <FaThermometerQuarter/>;}
+    if (temp > 200) {icon = <FaThermometerHalf/>;}
+    if (temp > 400) {icon = <FaThermometerThreeQuarters/>;}
+    if (temp > 600) {icon = <FaThermometerFull/>;}
+    info.temperature.icon = icon;
+}
+
 function Controls({state, setState}) {
     return <div id='controls'>{Object.entries(state).map(
         ([k, v]) => {
@@ -44,6 +61,7 @@ function Controls({state, setState}) {
                 onChange={(v) => {
                     const newState = {...state};
                     newState[k] = v;
+                    if (k == 'temperature') {updateThermometer(v);}
                     setState(newState);
                 }}
                 {...info[k]}

@@ -3,7 +3,7 @@
 }
 
 #controls .slider .name {
-    font-size: 12px;
+    font-size: 14px;
     color: hsl(200, 10%, 40%);
     margin-bottom: 8px;
 }
@@ -48,6 +48,10 @@
 @media (max-width: 600px) {
     #controls .slider.coupling {
         display: none;
+    }
+
+    #controls .slider .name {
+        font-size: 12px;
     }
 }
 

@@ -1,7 +1,7 @@
 # Ising Spin Model
 A blazing-fast WebGL implementation of the Ising spin model.
 
-[Screenshot of application](https://github.com/wgxli/ising-spin-model/raw/master/public/screenshot.png)
+![Screenshot of application](https://github.com/wgxli/ising-spin-model/raw/master/public/screenshot.png)
 
 Reproduces many behaviours of ferromagnetic materials,
 including:

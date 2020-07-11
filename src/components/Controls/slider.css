@@ -1,0 +1,53 @@
+#controls .slider {
+    padding: 10px 20px;
+}
+
+#controls .slider .name {
+    font-size: 12px;
+    color: hsl(200, 10%, 40%);
+    margin-bottom: 8px;
+}
+
+
+#controls .slider .value {
+    font-size: 28px;
+    margin: 0;
+    position: relative;
+}
+
+#controls .slider .value .icon {
+    position: absolute;
+    margin-left: auto;
+    right: 0;
+    font-size: 36px;
+    color: hsl(200, 10%, 70%);
+}
+
+@media (max-width: 800px) {
+    #controls .slider {
+        padding: 0px 15px;
+        margin-bottom: -8px;
+    }
+
+    #controls .slider .name {
+        font-size: 11px;
+        margin-bottom: 0;
+    }
+
+    #controls .slider .value {
+        font-size: 26px;
+        margin-bottom: -12px;
+    }
+
+    #controls .slider .value .icon {
+        font-size: 30px;
+        top: -4px;
+    }
+}
+
+@media (max-width: 600px) {
+    #controls .slider.coupling {
+        display: none;
+    }
+}
+

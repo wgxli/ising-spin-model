@@ -1,0 +1,19 @@
+#controls {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+
+    box-shadow: 1px 1px 8px hsla(200, 10%, 10%, 0.3);
+}
+
+@media (min-width: 500px) {
+    #controls {
+        right: unset;
+        bottom: 0;
+        max-width: 300px;
+        width: 30vw;
+    }
+}

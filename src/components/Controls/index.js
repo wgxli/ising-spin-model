@@ -61,7 +61,7 @@ function Controls({state, setState}) {
                 onChange={(v) => {
                     const newState = {...state};
                     newState[k] = v;
-                    if (k == 'temperature') {updateThermometer(v);}
+                    if (k === 'temperature') {updateThermometer(v);}
                     setState(newState);
                 }}
                 {...info[k]}

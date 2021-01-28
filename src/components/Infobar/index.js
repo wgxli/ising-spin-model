@@ -19,7 +19,7 @@ function Infobar({state, simWidth, simHeight}) {
 
     return <div className='info-bar'>
         <Entry name='Curie Temperature' value={curie_temp.toFixed(1) + ' K'}/>
-        <Entry name='Simulation Size' value={simWidth + ' × ' + simHeight}/>
+        <Entry name='Simulation Size' value={Math.round(simWidth) + ' × ' + Math.round(simHeight)}/>
     </div>;
 }
 

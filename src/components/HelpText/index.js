@@ -21,7 +21,7 @@ function HelpText() {
             <p>Each electron is influenced by two opposing forces:</p>
             <ul>
                 <li><b>Magnetism</b>, which tends to align the spin of each electron with its neighbors and the external magnetic field, and</li>
-                <li><b>Temperature</b>, which causes random flucuations in orientation.</li>
+                <li><b>Heat</b>, which causes random flucuations in orientation.</li>
             </ul>
             Despite its simplicity, the model exhibits complex behavior, including spontaneous magnetization, magnetic domains, and a Curie temperature.
             <button onClick={() => setOpen(false)}>Got it!</button>

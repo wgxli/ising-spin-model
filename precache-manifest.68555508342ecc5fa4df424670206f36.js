@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5315630683af429256d9d84070fad40f",
+    "revision": "3a88658e1d7972ed9b05e97b919ef025",
     "url": "/ising-spin-model/index.html"
   },
   {
-    "revision": "a152140a3b2dcee149b9",
+    "revision": "1604ca58ef2cb2ba1ac7",
     "url": "/ising-spin-model/static/css/main.d5c132e0.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ising-spin-model/static/js/2.e7ddaa2d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a152140a3b2dcee149b9",
-    "url": "/ising-spin-model/static/js/main.ba683ba2.chunk.js"
+    "revision": "1604ca58ef2cb2ba1ac7",
+    "url": "/ising-spin-model/static/js/main.6e5d8f57.chunk.js"
   },
   {
     "revision": "dd5118501df41d18c908",

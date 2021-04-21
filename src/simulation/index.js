@@ -7,6 +7,10 @@ let gl = null;
 // Textures for current and next simulation state
 let currentState = null;
 let nextState = null;
+
+let currAverage = null;
+let nextAverage = null;
+
 let framebuffer = null;
 let program = null;
 
@@ -136,8 +140,13 @@ function start() {
     createScreen();
 
     nextState = createTexture();
-    framebuffer = gl.createFramebuffer();
     currentState = createTexture();
+
+    currAverage = createTexture();
+    nextAverage = createTexture();
+
+    framebuffer = gl.createFramebuffer();
+
 
     createUniforms();
 
@@ -156,6 +165,7 @@ function onResize() {
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 }
 
+let frame  = 0;
 function render() {
     gl.bindTexture(gl.TEXTURE_2D, currentState);
 
@@ -170,6 +180,7 @@ function render() {
 
     // Render to screen
     setState('pass', 1);
+    gl.bindTexture(gl.TEXTURE_2D, nextState);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
@@ -178,10 +189,47 @@ function render() {
     currentState = nextState;
     nextState = temp;
 
+    // Compute averaging step
+    if (frame % 5 === 0) {
+        setState('pass', 3);
+        gl.bindTexture(gl.TEXTURE_2D, currAverage);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+        gl.framebufferTexture2D(
+            gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
+            gl.TEXTURE_2D, nextAverage, 0
+        );
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+        // Swap textures
+        temp = currAverage;
+        currAverage = nextAverage;
+        nextAverage = temp;
+    }
+
+    // Sometimes read current average,
+    // and overwrite the average buffer
+    if (frame % 20 === 0) {
+        setState('pass', 2);
+
+        let pixels = new Uint8Array(4 * 100);
+        gl.bindTexture(gl.TEXTURE_2D, nextAverage);
+        gl.readPixels(0, 0, 10, 10, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+        console.log(pixels);
+
+        gl.bindTexture(gl.TEXTURE_2D, currentState);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+        gl.framebufferTexture2D(
+            gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
+            gl.TEXTURE_2D, currAverage, 0
+        );
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+    }
+
     // Toggle iteration (odd/even)
     setState('iteration', 1 - state.iteration);
     setState('random_seed', Math.random());
 
+    frame += 1;
     requestAnimationFrame(render);
 }
 

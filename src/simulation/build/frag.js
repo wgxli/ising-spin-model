@@ -19,7 +19,7 @@ const float C_BOLTZMANN = 4e-3;
 vec4 get_pixel(float dx, float dy) {
     return 2.0 * texture2D(
         u_spin,
-        v_texCoord + vec2(dx, dy) / u_resolution
+        fract(v_texCoord + vec2(dx, dy) / u_resolution)
     ) - 1.0;
 }
 
@@ -47,18 +47,24 @@ void main() {
         current.y + current.z + right.z + bottom.y
     );
 
-    // Render to texture on pass zero, otherwise render to screen.
+    // Render Passes
+    // 0: Compute simulated spins for next frame
+    // 1: Display average spin per cell (render to screen)
+    // 2: Display average spin per cell (render to texture)
+    // 3: Compute partial average (convolve with kernel)
     if (u_pass < 0.5) {
         // Compute new spins on pass 0, otherwise just display existing spins.
         vec4 delta_h = 2.0 * current * (u_coupling * adjacent_sum + u_field);
         float beta = 1.0 / (u_temperature * C_BOLTZMANN);
         vec4 flip_probability = exp(-max(delta_h, 0.0) * beta);
 
-        // Update only 'odd' checkerboard on odd iterations and vice-versa
+
         vec2 noise = vec2(
             rand(v_texCoord + u_random_seed * vec2(3.14159, 0.0)),
             rand(v_texCoord + u_random_seed * vec2(0.0, 3.14159))
         );
+
+        // Update only 'odd' checkerboard on odd iterations and vice-versa
         if (u_iteration > 0.5) {
             if (flip_probability.x > noise.x) {new.x = 1.0 - new.x;}
             if (flip_probability.w > noise.y) {new.w = 1.0 - new.w;}
@@ -68,9 +74,28 @@ void main() {
         }
 
         gl_FragColor = new;
-    } else {
-        float average = (new.x + new.y + new.z + new.w) / 4.0;
-        gl_FragColor = vec4(average, average, average, 1.0);
+        return;
     }
+
+    float average = (new.x + new.y + new.z + new.w) / 4.0;
+    if (u_pass < 1.5) {
+        gl_FragColor = vec4(average, average, average, 1.0);
+        return;
+    }
+
+    if (u_pass < 2.5) {
+        gl_FragColor = vec4(average, average, average, average);
+        return;
+    }
+
+    float k_average = 0.0;
+    for (int i = 0; i < 100; i++) {
+        float dx = rand(u_random_seed * vec2(float(i) * 3.14159, 0.0));
+        float dy = rand(u_random_seed * vec2(0.0, float(i) * 3.14159));
+        k_average += get_pixel(dx * u_resolution.x, dy * u_resolution.y).x;
+    }
+    k_average /= 100.0;
+    k_average += 1.0;
+    gl_FragColor = k_average * vec4(0.5, 0.5, 0.5, 0.5);
 }
 `;

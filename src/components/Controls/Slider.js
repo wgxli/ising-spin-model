@@ -7,6 +7,7 @@ function Slider({
     name, unit, icon,
     value,
     min, max, decimals,
+    marks,
     onChange
 }) {
     return <div className={'slider ' + id}>
@@ -20,6 +21,7 @@ function Slider({
         <BaseSlider
             value={value}
             min={min} max={max} step={Math.pow(10, -decimals)}
+            marks={marks}
             onChange={(e, v) => onChange(v)}
         />
     </div>;

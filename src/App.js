@@ -12,7 +12,7 @@ import './App.css';
 
 function App() {
     const [state, setAppState] = useState({
-        temperature: 273,
+        temperature: 283.65,
         coupling: 0.5,
         field: 0,
     });

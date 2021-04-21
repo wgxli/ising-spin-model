@@ -12,15 +12,25 @@ function Entry({name, value}) {
     </div>
 }
 
-function Infobar({state, simWidth, simHeight}) {
+function getCurieTemp(state) {
     let {coupling} = state;
+    return curie_scale_factor * coupling/boltzmann_constant;
+}
 
-    let curie_temp = curie_scale_factor * coupling/boltzmann_constant
+function Infobar({state, simWidth, simHeight}) {
+    let {coupling, temperature} = state;
+
+    const k = coupling / (boltzmann_constant * temperature);
+
+    const ferromagnet = temperature < getCurieTemp(state);
+    const magnetization_eq = ferromagnet ? Math.pow(1 - Math.pow(Math.sinh(2*k), -4), 1/8) : 0;
 
     return <div className='info-bar'>
-        <Entry name='Curie Temperature' value={curie_temp.toFixed(1) + ' K'}/>
+        <Entry name='Spontaneous Magnetization' value={(100*magnetization_eq).toFixed(0) + '%'}/>
         <Entry name='Simulation Size' value={Math.round(simWidth) + ' × ' + Math.round(simHeight)}/>
     </div>;
 }
+
+export {getCurieTemp};
 
 export default Infobar;

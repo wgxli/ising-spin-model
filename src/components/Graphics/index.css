@@ -5,3 +5,29 @@
     top: 0;
     left: 0;
 }
+
+.loading {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 80px;
+    font-weight: 200;
+    color: white;
+    background: linear-gradient(to bottom, hsl(200, 30%, 20%), hsl(230, 35%, 25%));
+
+    z-index: -10;
+}
+
+@media (max-width: 800px) {
+    .loading {
+        font-size: 50px;
+    }
+}

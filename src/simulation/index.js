@@ -2,6 +2,7 @@ import fragmentShader from './build/frag.js';
 import vertexShader from './build/vert.js';
 
 let gl = null;
+let setResponseFunctions = null;
 
 
 // Textures for current and next simulation state
@@ -18,7 +19,7 @@ let program = null;
 let state = {
     coupling: 0.5,
     field: 0,
-    temperature: 273,
+    temperature: 283.65,
     iteration: 0,
     pass: 0,
     random_seed: 0,
@@ -27,7 +28,6 @@ let state = {
 // Location of GLSL uniforms.
 // Will be initialized based on state.
 let uniforms = {};
-
 
 
 // GLSL Initialization Functions
@@ -126,7 +126,6 @@ function setState(name, value) {
 
 
 
-
 // Main initialization function
 function start() {
     if (gl !== null) {return;}
@@ -208,13 +207,21 @@ function render() {
 
     // Sometimes read current average,
     // and overwrite the average buffer
-    if (frame % 20 === 0) {
+    if (frame % 15 === 0) {
         setState('pass', 2);
 
-        let pixels = new Uint8Array(4 * 100);
+        const pixels = new Uint8Array(4 * 100);
         gl.bindTexture(gl.TEXTURE_2D, nextAverage);
         gl.readPixels(0, 0, 10, 10, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-        console.log(pixels);
+
+        let average = 0;
+        for (let i = 0; i < 100; i++) {
+            average += pixels[4*i] + (pixels[4*i+1] + (pixels[4*i+2] + pixels[4*i+3]/256)/256)/256;
+        }
+        average /= 100;
+        setResponseFunctions({
+            magnetization: 100 * (average/128 - 1)
+        });
 
         gl.bindTexture(gl.TEXTURE_2D, currentState);
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
@@ -233,7 +240,9 @@ function render() {
     requestAnimationFrame(render);
 }
 
-// Timeout to fix iPhone bug
-document.addEventListener('DOMContentLoaded', () => setTimeout(start, 100));
+function startSimulation(handleResponse) {
+    setResponseFunctions = handleResponse;
+    setTimeout(start, 1000);
+}
 
-export {setState};
+export {startSimulation, setState};

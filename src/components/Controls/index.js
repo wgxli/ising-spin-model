@@ -81,10 +81,13 @@ function setCurieTemperature(state) {
     }];
 }
 
+const parameters = ['temperature', 'coupling', 'field'];
+
 function Controls({state, setState}) {
     setCurieTemperature(state);
-    return <div id='controls'>{Object.entries(state).map(
-        ([k, v]) => {
+    return <div id='controls'>{parameters.map(
+        (k) => {
+            const v = state[k];
             const is_T = (k === 'temperature');
             const offset = is_T ? KELVIN_OFFSET : 0;
             return <Slider

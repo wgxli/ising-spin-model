@@ -5,10 +5,9 @@ import Controls from './components/Controls';
 import Infobar from './components/Infobar';
 import HelpText from './components/HelpText';
 
-import {setState as setGLState} from './simulation';
+import {startSimulation, setState as setGLState} from './simulation';
 
 import './App.css';
-
 
 function App() {
     const [state, setAppState] = useState({
@@ -17,11 +16,17 @@ function App() {
         field: 0,
     });
     const setState = (s) => {
-        for (let [k, v] of Object.entries(s)) {
+        console.log(s);
+        for (let [k, v] of Object.entries(state)) {
             setGLState(k, v);
         }
         setAppState(s);
     }
+
+    const [responseFunctions, setResponseFunctions] = useState({
+        magnetization: 0
+    });
+    useEffect(() => startSimulation(setResponseFunctions, setAppState), []);
 
     // Resize handler
     const [width, setWidth] = useState(0);
@@ -49,7 +54,11 @@ function App() {
     return <>
         <Graphics width={width} height={height}/>
         <Controls state={state} setState={setState}/>
-        <Infobar state={state} simWidth={2 * width} simHeight={2 * height}/>
+        <Infobar
+            state={state}
+            responseFunctions={responseFunctions}
+            simWidth={2 * width} simHeight={2 * height}
+        />
         <HelpText/>
     </>;
 }

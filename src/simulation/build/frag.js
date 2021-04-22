@@ -27,6 +27,24 @@ float rand(vec2 co) {
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
+float decode(vec4 v) {
+    v *= 255.0;
+    return (v.x + (v.y + (v.z + v.w/256.0)/256.0)/256.0)/256.0;
+}
+
+vec4 encode(float value) {
+    vec4 encoded = vec4(0.0, 0.0, 0.0, 0.0);
+    for (int i = 0; i < 4; i++) {
+        value *= 255.999;
+        float pixel = floor(value);
+        value -= pixel;
+        encoded[i] = pixel/255.0;
+    }
+    // To account for rounding bias
+    encoded[3] += value/255.0;
+    return encoded;
+}
+
 void main() {
     vec4 current = get_pixel(0.0, 0.0);
     vec4 new = (current + 1.0)/2.0;
@@ -84,18 +102,19 @@ void main() {
     }
 
     if (u_pass < 2.5) {
-        gl_FragColor = vec4(average, average, average, average);
+        gl_FragColor = encode(average);
         return;
     }
 
-    float k_average = 0.0;
+    vec4 k_average = vec4(0.0, 0.0, 0.0, 0.0);
     for (int i = 0; i < 100; i++) {
         float dx = rand(u_random_seed * vec2(float(i) * 3.14159, 0.0));
         float dy = rand(u_random_seed * vec2(0.0, float(i) * 3.14159));
-        k_average += get_pixel(dx * u_resolution.x, dy * u_resolution.y).x;
+        k_average += get_pixel(dx * u_resolution.x, dy * u_resolution.y);
     }
-    k_average /= 100.0;
-    k_average += 1.0;
-    gl_FragColor = k_average * vec4(0.5, 0.5, 0.5, 0.5);
+    k_average /= 200.0;
+    k_average += 0.5;
+
+    gl_FragColor = encode(decode(k_average));
 }
 `;

@@ -5,6 +5,7 @@
   "homepage": "https://samuelj.li/ising-spin-model",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "kefir": "^3.8.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",

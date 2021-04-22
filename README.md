@@ -19,3 +19,12 @@ To ensure that pixel updates remain independent
 during parallelization, we perform two passes,
 each of which updates pixels in a checkerboard formation.
 This ensures that two adjacent pixels will never be simultaneously flipped.
+
+Overall magnetization is computed via a kernel-based averaging method.
+We keep an ‘averaging buffer’ that is initially set to the texture of spin states,
+and repeatedly convolve it with a sparse kernel.
+After a few iterations, the image is essentially homogeneous and the average magnetization can be determined by sampling any pixel.
+See [my blog post](https://samuelj.li/blog/2020-08-01-kernel-averaging#page-top) for a full explanation.
+
+To avoid impacting performance, in practice we perform one convolution step every few frames or so, so the magnetization is sampled at a rate of a few hertz.
+We use all four color channels in each pixel to increase the precision of the computation.
